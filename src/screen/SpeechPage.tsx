@@ -41,32 +41,24 @@ class SpeechPage extends Component<IProps, IState> {
     // this.setState({toggle: false});
   }
   onResultSpeech(eve: any) {
-    // console.log('result speech', e.value[0]);
-    // this.setState({
-    //   speechText: e.value[0],
-    // });
+    // console.log('result speech', eve.value[0]);
     this.setState(prev => ({
-      speechList: [...prev.speechList, { id: Date.now(), text: eve.value[0] }],
-      speechText:eve.value[0]
+      speechList: [...prev.speechList, {id: Date.now(), text: eve.value[0]}],
+      speechText: eve.value[0],
     }));
   }
 
   handleStartRecognitation = async () => {
-    try {
-      this.setState({toggle: true});
-      await Voice.start('en-US');
-      this.onStartSpeech();
-    } catch (e) {
-      console.log('start error', e);
-    }
+    this.setState({toggle: true});
+    await Voice.start('en-US');
+    this.onStartSpeech();
+
+    // console.log('start error', e);
   };
   handleStopRecognition = async () => {
-    try {
-      await Voice.stop();
-      this.onEndSpeech();
-    } catch (e) {
-      console.log('Stop error', e);
-    }
+    await Voice.stop();
+    this.onEndSpeech();
+
     this.setState({toggle: false});
   };
   clearText = () => {
@@ -87,7 +79,9 @@ class SpeechPage extends Component<IProps, IState> {
           <Text style={styles.headingText}>Speech Recognitior</Text>
         </View>
         <View style={styles.fieldContainer}>
-          <Text testID='speech-text' style={styles.textInput}>{this.state.speechText}</Text>
+          <Text testID="speech-text" style={styles.textInput}>
+            {this.state.speechText}
+          </Text>
         </View>
         <View style={styles.actionSect}>
           <View
@@ -109,7 +103,10 @@ class SpeechPage extends Component<IProps, IState> {
               <Text style={styles.text2}>Stop</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={this.clearText} style={styles.clearAction}>
+          <TouchableOpacity
+            testID="clearBtn"
+            onPress={this.clearText}
+            style={styles.clearAction}>
             <Text style={styles.clearText}>Clear</Text>
           </TouchableOpacity>
         </View>
@@ -161,7 +158,7 @@ class SpeechPage extends Component<IProps, IState> {
             }}>
             <Text
               style={{
-                fontSize: wp(5),
+                fontSize: hp(5),
                 color: 'green',
               }}>
               List of Speech
@@ -177,7 +174,7 @@ class SpeechPage extends Component<IProps, IState> {
             testID="flatlist"
             data={this.state.speechList}
             renderItem={({item}) => (
-              <Text style={styles.itemText}>{item.text}</Text>
+              <Text style={styles.itemText}>{item?.text}</Text>
             )}
           />
         </View>
@@ -198,7 +195,7 @@ const styles = StyleSheet.create({
     marginVertical: hp(3),
   },
   headingText: {
-    fontSize: wp(6),
+    fontSize: hp(6),
     fontWeight: '500',
     letterSpacing: 1.11,
     color: 'black',
@@ -211,7 +208,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
   },
   textInput: {
-    fontSize: wp(5),
+    fontSize: hp(5),
     width: wp(83),
     // textAlign: 'justify',
     lineHeight: hp(2.7),
@@ -230,7 +227,7 @@ const styles = StyleSheet.create({
   clearText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: wp(4.5),
+    fontSize: hp(4.5),
   },
   speakBtn: {
     paddingVertical: hp(1),
@@ -240,7 +237,7 @@ const styles = StyleSheet.create({
   },
   text2: {
     color: 'white',
-    fontSize: wp(4),
+    fontSize: hp(4),
     fontWeight: '500',
     letterSpacing: 1.3,
   },
@@ -260,8 +257,8 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
   },
   itemText: {
-    marginBottom: wp(2),
-    fontSize: wp(4),
+    marginBottom: hp(2),
+    fontSize: hp(4),
     color: 'white',
   },
 });

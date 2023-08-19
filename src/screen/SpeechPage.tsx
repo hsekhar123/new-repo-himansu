@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Modal,
   FlatList,
@@ -33,15 +32,9 @@ class SpeechPage extends Component<IProps, IState> {
     Voice.onSpeechEnd = this.onEndSpeech.bind(this);
     Voice.onSpeechResults = this.onResultSpeech.bind(this);
   }
-  onStartSpeech() {
-    // console.log('start speech');
-  }
-  onEndSpeech() {
-    // console.log('end speech');
-    // this.setState({toggle: false});
-  }
+  onStartSpeech() {}
+  onEndSpeech() {}
   onResultSpeech(eve: any) {
-    // console.log('result speech', eve.value[0]);
     this.setState(prev => ({
       speechList: [...prev.speechList, {id: Date.now(), text: eve.value[0]}],
       speechText: eve.value[0],
@@ -52,8 +45,6 @@ class SpeechPage extends Component<IProps, IState> {
     this.setState({toggle: true});
     await Voice.start('en-US');
     this.onStartSpeech();
-
-    // console.log('start error', e);
   };
   handleStopRecognition = async () => {
     await Voice.stop();
@@ -158,7 +149,7 @@ class SpeechPage extends Component<IProps, IState> {
             }}>
             <Text
               style={{
-                fontSize: hp(5),
+                fontSize: wp(5),
                 color: 'green',
               }}>
               List of Speech
@@ -183,7 +174,6 @@ class SpeechPage extends Component<IProps, IState> {
   }
 }
 export default SpeechPage;
-
 const styles = StyleSheet.create({
   container: {
     // backgroundColor:'#5885AF'
@@ -195,9 +185,10 @@ const styles = StyleSheet.create({
     marginVertical: hp(3),
   },
   headingText: {
-    fontSize: hp(6),
+    fontSize: wp(6),
     fontWeight: '500',
     letterSpacing: 1.11,
+
     color: 'black',
   },
   fieldContainer: {
@@ -210,7 +201,7 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: hp(5),
     width: wp(83),
-    // textAlign: 'justify',
+    textAlign: 'justify',
     lineHeight: hp(2.7),
   },
   actionSect: {
@@ -227,7 +218,7 @@ const styles = StyleSheet.create({
   clearText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: hp(4.5),
+    fontSize: wp(4.5),
   },
   speakBtn: {
     paddingVertical: hp(1),
@@ -237,7 +228,7 @@ const styles = StyleSheet.create({
   },
   text2: {
     color: 'white',
-    fontSize: hp(4),
+    fontSize: wp(4),
     fontWeight: '500',
     letterSpacing: 1.3,
   },
@@ -258,7 +249,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     marginBottom: hp(2),
-    fontSize: hp(4),
+    fontSize: wp(4),
     color: 'white',
   },
 });
